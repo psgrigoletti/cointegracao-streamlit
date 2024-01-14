@@ -8,9 +8,11 @@ import plotly.express as px
 import statsmodels.api as sm
 import streamlit as st
 import yfinance as yf
+from decorators import *
 
 
 @st.cache_data
+@timeit
 def buscar_dados(ticker1, ticker2, data_inicial, data_final):
     dados = pd.DataFrame()
     for t in [ticker1, ticker2]:
@@ -18,7 +20,10 @@ def buscar_dados(ticker1, ticker2, data_inicial, data_final):
             "Adj Close"
         ]
         if len(dados[t]) == 0:
-            frase = f"Erro ao buscar os dados de {t}. Verifique os parâmetros usados."
+            frase = (
+                f"Erro ao buscar os dados de {t}. Verifique os parâmetros utilizados."
+            )
+
             st.error(frase, icon="🚨")
             st.stop()
     dados.dropna(inplace=True)

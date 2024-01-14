@@ -1,0 +1,53 @@
+[tool.poetry]
+name = "cointegracao-streamlit"
+version = "0.1.0"
+description = ""
+authors = ["Pablo Souza Grigoletti <pablo.grigoletti@serpro.gov.br>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "^1.30.0"
+pandas = "^2.1.4"
+yfinance = "^0.2.35"
+seaborn = "^0.13.1"
+matplotlib = "^3.8.2"
+statsmodels = "^0.14.1"
+plotly = "^5.18.0"
+pip = "^23.3.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.4"
+pytest-cov = "^4.1.0"
+taskipy = "^1.12.2"
+ruff = "^0.1.13"
+isort = "^5.13.2"
+blue = "^0.9.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 79
+exclude = ['.venv', 'migrations']
+
+[tool.isort]
+profile = "black"
+line_length = 79
+extend_skip = ['migrations']
+
+[tool.pytest.ini_options]
+pythonpath = "."
+
+[tool.blue]
+extend-exclude = '(migrations/)'
+
+[tool.taskipy.tasks]
+lint = 'ruff . && blue --check . --diff'
+format = 'blue .  && isort .'
+run = 'streamlit run correlacao/app.py'
+pre_test = 'task lint'
+test = 'pytest -s -x --cov=fast_zero -vv'
+post_test = 'coverage html'
