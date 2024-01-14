@@ -45,8 +45,15 @@ analisar = st.button("Analisar")
 if analisar:
     dados = buscar_dados(ticker1, ticker2, data_inicial, data_final)
 
-    tab0, tab1, tab2, tab3, tab4 = st.tabs(
-        ["Dados", "Preço", "Retorno normalizado", "Dispersão", "Statsmodels"]
+    tab0, tab1, tab2, tab3, tab4, tab5 = st.tabs(
+        [
+            "Dados",
+            "Preço",
+            "Retorno normalizado",
+            "Dispersão",
+            "Statsmodels",
+            "Correlação",
+        ]
     )
     with tab0:
         st.write(dados)
@@ -123,6 +130,13 @@ if analisar:
         # st.write(retorno_acumulado)
 
         st.plotly_chart(fig2)
+
+    with tab5:
+        from scipy.stats import pearsonr
+
+        coeficiente, p_value = pearsonr(dados[ticker1], dados[ticker2])
+        st.write(f"Coeficiente de correlação: {coeficiente}")
+        st.write(f"p-value: {p_value}")
 
     # correlacao = dados.corr()
     # fig2 = sn.heatmap(correlacao, annot=True, fmt=".1f", linewidths=0.6).get_figure()
