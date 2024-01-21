@@ -1,5 +1,6 @@
-# cointegracao-streamlit
-Em busca das cointegrações...
+# margemliquida-pair-trading
+
+Em busca de operações de pair-trading...
 
 # Todo
 - Criar uma página que mostre a correlação entre 2 ativos
